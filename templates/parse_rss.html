@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parse RSS Feed</title>
+</head>
+<body>
+    <h1>Parse RSS Feed</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <label for="rss_feed">Select RSS Feed:</label>
+        <select name="rss_feed_id" id="rss_feed">
+            {% for rss_feed in rss_feeds %}
+                <option value="{{ rss_feed.id }}">{{ rss_feed.title }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit">Parse RSS Feed</button>
+    </form>
+</body>
+</html>

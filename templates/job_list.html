@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}JobFinder{% endblock %}
+{% block content %}
+{% if jobs %}
+    <h1>Job Listings</h1>
+    <div id="job-list">
+        {% for job in jobs %}
+            <div>
+                <h2>{{ job.title }}</h2>
+                <p>{{ job.company }} - {{ job.location }} - {{ job.link }}</p>
+                <p>{{ job.description|truncatewords:30 }}</p>
+                <p>Posted on: {{ job.pub_date }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <h1>No jobs found</h1>
+{% endif %}
+{% endblock %}
