@@ -3,18 +3,23 @@
 
 {% block content %}
 <h1>Job Listings</h1>
-<form method="get">
+<form method="get" class="mdc-text-field mdc-text-field--outlined">
     {{ form.as_p }}
-    <button type="submit">Search</button>
+    <button type="submit" class="mdc-button mdc-button--outlined">Search</button>
 </form>
+<hr class="mdc-divider"> <!-- Divider line -->
 <div id="job-list">
     {% for job in jobs %}
-        <div>
-            <h2>{{ job.title }}</h2>
-            <p>{{ job.company }} - {{ job.location }}</p>
-            <p>{{ job.description|truncatewords:30 }}</p>
-            <p>Posted on: {{ job.pub_date }}</p>
-        </div>
-    {% endfor %}
+    <div>
+        <h2 class="h5">
+            <a href="{{ job.link }}" target="_blank">{{ job.title }}</a>
+        </h2>
+        <p>{{ job.company }} - {{ job.location }}</p>
+        <span title="{{ job.description }}">{{ job.description|truncatewords:100|safe }}</span>
+        <p>Posted on: {{ job.pub_date }}</p>
+        <hr class="mdc-divider"> <!-- Divider line -->
+    </div>
+</div>
+{% endfor %}
 </div>
 {% endblock %}

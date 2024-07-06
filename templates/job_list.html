@@ -2,19 +2,26 @@
 {% load static %}
 {% block title %}JobFinder{% endblock %}
 {% block content %}
-{% if jobs %}
-    <h1>Job Listings</h1>
-    <div id="job-list">
+<div class="container mt-5">
+    {% if jobs %}
+    <h1 class="mb-4">Job Listings</h1>
+    <div id="job-list" class="list-group">
         {% for job in jobs %}
-            <div>
-                <h2>{{ job.title }}</h2>
-                <p>{{ job.company }} - {{ job.location }} - {{ job.link }}</p>
-                <p>{{ job.description|truncatewords:30 }}</p>
-                <p>Posted on: {{ job.pub_date }}</p>
-            </div>
+        <div class="job-entry list-group-item mb-3">
+            <h2 class="h5">
+                <a href="{{ job.link }}" target="_blank" style="color: blue;">{{ job.title }}</a>
+                <p>{{ job.company }} - {{ job.location }}</p>
+                <span title="{{ job.description }}">{{ job.description|truncatewords:50|safe }}
+                </span>
+                <p class="text-muted">Posted on: {{ job.pub_date|date:"F j, Y, g:i a" }}</p>
+            </h2>
+        </div>
+        <hr> <!-- Add a horizontal line between jobs -->
         {% endfor %}
     </div>
-{% else %}
-    <h1>No jobs found</h1>
-{% endif %}
+    {% else %}
+    <h1 class="text-center">No jobs found</h1>
+    {% endif %}
+</div>
+</div>
 {% endblock %}

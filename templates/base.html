@@ -1,39 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
-    <head>
-        {% load static %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}JobFinder{% endblock %}</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    </head>
-    <body>
-        <nav>
-            <div class="nav-wrapper">
-                <a href="{% url 'index' %}" class="brand-logo
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{% url 'index' %}">Inicio</a></li>
-                    <li><a href="{% url 'job_list' %}">Ofertas de trabajo</a></li>
-                    <li><a href="{% url 'job_search' %}">Buscar Trabajos</a></li>
-                    
-        </nav>
-        <div class="container">
-            {% block content %}
-            {% endblock %}
-        </div>
-        <footer class="page-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">JobFinder</h5>
-                        <p class="grey-text text-lighten-4">Encuentra el trabajo de tus sueños.</p>
-                    </div>
-                </div>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Ajuste del tamaño estándar de las imágenes */
+        img {
+            width: 100px;
+            /* Tamaño estándar de 10px */
+            height: auto;
+            /* Mantener la proporción */
+        }
+    </style>
+
+    <title>{% block title %}JobFinder{% endblock %}</title>
+</head>
+
+<body class="font-sans">
+    <header class="bg-gray-800 text-white py-4">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div>
+                <button class="text-white">menu</button>
+                <span class="ml-2">Job Finder</span>
             </div>
-        </footer>
-    <script src="https://cdns.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>    
-                    
-    </body>
+            <div>
+                <a href="#" class="text-white">contact_support</a>
+            </div>
+        </nav>
+    </header>
+
+    <nav class="bg-gray-200 py-2">
+        <ul class="container mx-auto flex">
+            <li class="mr-4">
+                <a href="{% url 'index' %}" class="text-gray-800">Home</a>
+            </li>
+            <li class="mr-4">
+                <a href="{% url 'job_list' %}" class="text-gray-800">Ofertas de Trabajo</a>
+            </li>
+            <li class="mr-4">
+                <a href="{% url 'job_search' %}" class="text-gray-800">Buscar Trabajo</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="container mx-auto py-8">
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/material-components-web@11.0.0/dist/material-components-web.min.js"></script>
+    <script>
+        const topAppBar = new mdc.topAppBar.MDCTopAppBar(document.querySelector('header nav'));
+        const drawer = new mdc.drawer.MDCDrawer(document.querySelector('nav'));
+        topAppBar.listen('MDCTopAppBar:nav', () => {
+            drawer.open = !drawer.open;
+        });
+    </script>
+</body>
+
 </html>
