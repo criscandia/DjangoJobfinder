@@ -21,29 +21,29 @@ RabbitMQ or Redis (as a message broker for Celery)
 ## Clone the Repository:
 
 bash
-Copiar código
+Copy code
 git clone https://github.com/criscandia/DjangoJobfinder.git
 cd DjangoJobfinder
 Set Up Virtual Environment:
 
 bash
-Copiar código
+Copy code
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 Install Dependencies:
 
 bash
-Copiar código
+Copy code
 pip install -r requirements.txt
 Apply Migrations:
 
 bash
-Copiar código
+Copy code
 python manage.py migrate
 Run the Development Server:
 
 bash
-Copiar código
+Copy code
 python manage.py runserver
 Access the Application:
 Start the Celery worker:
