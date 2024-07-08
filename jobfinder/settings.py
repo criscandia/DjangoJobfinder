@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from celery import Celery
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-lz@tmalq^l3c4#vi#uv%kmtg8h++*1t&%4*-qajw=472nqgdoa"
@@ -39,8 +42,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "app",
+    "django_celery_beat",
+    "django_celery_results",
 ]
 
+# Agrego Celery Broker
+
+# CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+
+CELERY_RESULT_BACKEND = "django-db"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -134,3 +145,30 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CRON_CLASSES = [
     "app.cron.UpdateRSSFeedsCronJob",
 ]
+
+# Configuración de logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "celery.log",
+        },
+    },
+    "loggers": {
+        "celery": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
+CELERY_BEAT_SCHEDULE = {
+    "update-rss-feeds": {
+        "task": "app.tasks.update_rss_feeds",
+        "schedule": timedelta(days=1),  # Ajusta el intervalo según sea necesario
+    },
+}
